@@ -49,6 +49,6 @@ XGO-Rider是一款基于树莓派的桌面级双轮足开源开发平台，内�
 
 ## 致谢
 感谢以下人员对项目的贡献：
-刘鹏飞Robotics  
+刘鹏飞Robotics   
 jd3096  
 如果你在使用本项目时遇到了问题，欢迎提交 Issues 或 Pull Requests！
