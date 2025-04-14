@@ -13,14 +13,11 @@ XGO-Rider，A fun two-wheeled foot robot。
 
 ## 项目简介
 
-在此简要描述项目的目标、功能，或者它的用途。你可以说明为什么这个项目存在，它解决了什么问题，或是它如何帮助用户。
-
-例如：
-> 这是一个基于 Raspberry Pi 的自动驾驶系统，能够通过摄像头捕捉图像并进行实时分析，从而控制机器人行驶。
+XGO-Rider is a Raspberry Pi based desktop-level dual-wheeled foot open source development platform, built-in Raspberry Pi CM4 module to realize AI edge computing applications, using 4.5KG.CM all-metal magnetically encoded bus serial servos as joints and FOC hub-integrated motors as wheels, which can realize flexible movement, self-stabilizing control, motion superimposition, and image-voice interaction based on a large voice model, and supports secondary development.
 
 ## 安装和使用
 
 1. 克隆本仓库：
    ```bash
-   git clone https://github.com/username/repository-name.git
+   git clone https://github.com/Xgorobot/RaspberryPi-CM4-XGO-Rider.git
 
