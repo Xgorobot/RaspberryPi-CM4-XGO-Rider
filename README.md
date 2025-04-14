@@ -22,8 +22,8 @@ XGO-Rider是一款基于树莓派的桌面级双轮足开源开发平台，内�
    git clone https://github.com/Xgorobot/RaspberryPi-CM4-XGO-Rider.git
 
 ## 功能特性
-1.web遥控：基于flacksocket的可视化遥控
-2.语音对话：基于火山大模型的语音交互。
+1.web遥控：基于flacksocket的可视化遥控。  
+2.语音对话：基于火山大模型的语音交互。  
 3.小智互动：可以和小智进行有趣互动。
 
 ## 贡献
