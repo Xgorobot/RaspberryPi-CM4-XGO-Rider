@@ -20,14 +20,14 @@ XGO-Rider是一款基于树莓派的桌面级双轮足开源开发平台，内�
       ```bash
       git clone https://github.com/Xgorobot/RaspberryPi-CM4-XGO-Rider.git
       ```
-   2.进入项目目录：
-      ```bash
-      cd RaspberryPi-CM4-main 
-      ```
-   3.运行main.py： 
-      ```bash
-      sudo python3 main.py
-      ```
+2.进入项目目录：
+   ```bash
+   cd RaspberryPi-CM4-main 
+   ```
+3.运行main.py： 
+   ```bash
+   sudo python3 main.py
+   ```
 ## 功能特性
 1.web遥控：基于flacksocket的可视化遥控。  
 2.语音对话：基于火山大模型的语音交互。  
