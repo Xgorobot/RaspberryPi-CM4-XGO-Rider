@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <title>LwuDynamic</title>
+    <script src="{{ url_for('static',filename='socket.io.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static' , filename='console.css') }}" />
+</head>
+
+<body>
+    <div class="header">
+        <button class="reset-btn" onclick="socket.emit('reset','REST')">Reset</button>
+        <div class="balance" onclick="socket.emit('balance','1')">Balance</div>
+    </div>
+    <div class="main">
+        <iframe id='videoFrame' class="video_feed"></iframe>
+    </div>
+    <div class="footer">
+        <div class="action-div">
+            <div onclick="socket.emit('action','1')">
+                <img src="{{url_for('static' , filename='./images/tool-action.png')}}" alt="">
+                <span>Action</span>
+            </div>
+        </div>
+        <ul class="control-buttons">
+            <li onclick="socket.emit('LeftRight','1')">LeftRight</li>
+            <li onclick="socket.emit('UpDown','2')">UpDown</li>
+            <li onclick="socket.emit('GoBack','3')">GoBack</li>
+            <li onclick="socket.emit('Square','4')">Square</li>
+            <li onclick="socket.emit('LiftRotate','5')">LiftRotate</li>
+            <li onclick="socket.emit('Swaying','6')">Swaying</li>
+        </ul>
+        <div class="height-control">
+            <span>Height</span>
+            <input type="range" min="0" max="100" value="50" id="height-slider">
+            <span class="value-display">50</span>
+        </div>
+        <div class="joystick-container">
+            <div class="joystick-btn up">↑</div>
+            <div class="joystick-btn left">←</div>
+            <div class="joystick-btn right">→</div>
+            <div class="joystick-btn down">↓</div>
+        </div>
+    </div>
+    <script>
+        var deviceIP = "{{device_ip}}";
+        document.getElementById('videoFrame').src = "http://" + deviceIP + ":5001/camera";
+
+        var socket = io();
+        
+        const moveControl = {
+            active: false,
+            currentDirection: null,
+            repeatInterval: 100,
+            timer: null,
+            lastEventType: null,
+            
+            start: function(direction, button, eventType) {
+                if (this.lastEventType === eventType) return;
+                this.lastEventType = eventType;
+
+                if (this.active && this.currentDirection === direction) return;
+                
+                this.stop(); 
+                this.active = true;
+                this.currentDirection = direction;
+                
+                if (button) button.style.background = "rgba(255, 255, 255, 0.5)";
+                
+                this.sendCommand();
+            
+                setTimeout(() => {
+                    if (this.active) {
+                        this.timer = setInterval(() => {
+                            this.sendCommand();
+                        }, this.repeatInterval);
+                    }
+                }, 100);
+            },
+            
+            stop: function(button) {
+                this.lastEventType = null;
+                if (!this.active) return;
+                
+                clearInterval(this.timer);
+                this.timer = null;
+                this.active = false;
+                
+                if (button) button.style.background = "rgba(255, 255, 255, 0.3)";
+                socket.emit('reset', 'REST');
+                this.currentDirection = null;
+            },
+            
+            sendCommand: function() {
+                if (!this.active || !this.currentDirection) return;
+                console.log(`Moving ${this.currentDirection}`);
+                switch (this.currentDirection) {
+                    case 'up': socket.emit('up', '1'); break;
+                    case 'down': socket.emit('down', '-1'); break;
+                    case 'left': socket.emit('left', '120'); break;
+                    case 'right': socket.emit('right', '-120'); break;
+                }
+            }
+        };
+
+        function setupButton(button, direction) {
+            let isProcessing = false;
+            
+            const handleStart = (e) => {
+                if (isProcessing) return;
+                isProcessing = true;
+                e.preventDefault();
+                
+                const eventType = e.type === 'touchstart' ? 'touch' : 'mouse';
+                moveControl.start(direction, button, eventType);
+                
+                setTimeout(() => isProcessing = false, 50);
+            };
+
+            const handleEnd = (e) => {
+                e.preventDefault();
+                moveControl.stop(button);
+                isProcessing = false;
+            };
+
+            button.addEventListener('mousedown', handleStart, {passive: false});
+            button.addEventListener('touchstart', handleStart, {passive: false});
+            button.addEventListener('mouseup', handleEnd, {passive: false});
+            button.addEventListener('mouseleave', handleEnd, {passive: false});
+            button.addEventListener('touchend', handleEnd, {passive: false});
+            button.addEventListener('touchcancel', handleEnd, {passive: false});
+        }
+
+        const directions = {
+            up: document.querySelector('.up'),
+            down: document.querySelector('.down'),
+            left: document.querySelector('.left'),
+            right: document.querySelector('.right')
+        };
+
+        Object.entries(directions).forEach(([direction, button]) => {
+            setupButton(button, direction);
+        });
+
+        socket.on('connect', function() {
+            console.log('Connected to server');
+        });
+        
+        socket.on('disconnect', function() {
+            console.log('Disconnected from server');
+            moveControl.stop();
+        });
+        
+        socket.on('error', function(data) {
+            console.error('Socket error:', data);
+        });
+
+        const heightSlider = document.getElementById('height-slider');
+        const valueDisplay = document.querySelector('.value-display');
+        heightSlider.addEventListener('input', function() {
+            const value = this.value;
+            valueDisplay.textContent = value;
+            socket.emit('height', value);
+        });
+
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                moveControl.stop();
+            }
+        });
+
+        window.addEventListener('blur', () => {
+            moveControl.stop();
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const heightControl = document.querySelector('.height-control');
+            heightControl.style.position = "absolute";
+
+            setTimeout(() => {
+                heightControl.style.right = "5%"; 
+            }, 500);
+        });
+    </script>
+</body>
+</html>
