@@ -14,8 +14,19 @@ XGO-Rider，一个有趣的双轮足机器人。
 ## 项目简介
 
 XGO-Rider是一款基于树莓派的桌面级双轮足开源开发平台，内置树莓派CM4模组实现AI边缘计算应用，采用4.5KG.CM全金属磁编码总线串口舵机作为关节，FOC轮毂一体化电机作为轮子，可实现灵活移动、自稳控制、运动叠加和基于大语音模型的图像语音互动，支持二次开发。
-
-# 安装和使用
+## 目录结构
+-  RaspberryPi-CM4-main:主程序文件夹
+    - demos:示例程序
+      - expression：表情符号文件
+      - music：音频文件
+      - speechCn：中文语音识别
+      - speechEn：英语语音识别
+      - xiaozhi：小智实时语音对话
+    - flacksocket：通过flacksocket图形传输和控制机器人
+    - language：语言配置信息
+    - pics：图片文件
+    - volume：音量配置信息
+## 安装和使用
 
 1. 克隆本仓库：
     ```bash
