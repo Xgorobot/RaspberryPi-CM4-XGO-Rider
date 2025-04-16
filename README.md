@@ -49,7 +49,7 @@ XGO-Rider是一款基于树莓派的桌面级双轮足开源开发平台，内�
 
 ## 📜 更新日志
 ### 2025-04-14
-- **代码改进**优化了 /RaspberryPi-CM4-main/demos/language.py 的语言切换，使得不许重启整个系统即可切换语言
+- **代码改进**优化了 /RaspberryPi-CM4-main/demos/language.py 的语言切换，使得不需重启整个系统即可切换语言
 - **功能新增**添加了 update.sh脚本，运行此脚本可优化系统启动时间
 
 ## 贡献
