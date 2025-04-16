@@ -49,7 +49,7 @@
         "NOW":"Current language",
         "SET":"Language setting",
         "NoneType":"Language setting",
-        "SAVED":"Success,robot will restart in 3s"
+        "SAVED":"Success"
     },
     "DEMOEN":{
         "SHOW":"Show",
