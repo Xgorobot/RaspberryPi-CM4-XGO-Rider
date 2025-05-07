@@ -1,16 +1,4 @@
-'''
-语言转化文字
-记得从环境中配置密钥
-'''
 #coding=utf-8
-
-"""
-requires Python 3.6 or later
-
-pip install asyncio
-pip install websockets
-"""
-
 import asyncio
 import base64
 import gzip
@@ -29,8 +17,7 @@ import time
 import websockets
 
 appid = "3984980014"
-#token = api_key = os.getenv('token')
-token = api_key = "dME9mE6J4NWygiMFg6vhrqQ2S49TY2FX"
+token = "dME9mE6J4NWygiMFg6vhrqQ2S49TY2FX"
 cluster = "volcengine_input_common"
 audio_path = "recorded_audio.wav"
 audio_format = "wav"
@@ -80,13 +67,7 @@ def generate_header(
     reserved_data=0x00,
     extension_header=bytes()
 ):
-    """
-    protocol_version(4 bits), header_size(4 bits),
-    message_type(4 bits), message_type_specific_flags(4 bits)
-    serialization_method(4 bits) message_compression(4 bits)
-    reserved （8bits) 保留字段
-    header_extensions 扩展头(大小等于 8 * 4 * (header_size - 1) )
-    """
+    
     header = bytearray()
     header_size = int(len(extension_header) / 4) + 1
     header.append((version << 4) | header_size)
@@ -114,14 +95,7 @@ def generate_last_audio_default_header():
     )
 
 def parse_response(res):
-    """
-    protocol_version(4 bits), header_size(4 bits),
-    message_type(4 bits), message_type_specific_flags(4 bits)
-    serialization_method(4 bits) message_compression(4 bits)
-    reserved （8bits) 保留字段
-    header_extensions 扩展头(大小等于 8 * 4 * (header_size - 1) )
-    payload 类似与http 请求体
-    """
+
     protocol_version = res[0] >> 4
     header_size = res[0] & 0x0f
     message_type = res[1] >> 4
@@ -173,9 +147,7 @@ class AudioType(Enum):
 
 class AsrWsClient:
     def __init__(self, audio_path, cluster, **kwargs):
-        """
-        :param config: config
-        """
+
         self.audio_path = audio_path
         self.cluster = cluster
         self.success_code = 1000  # success code, default is 1000
@@ -232,12 +204,7 @@ class AsrWsClient:
 
     @staticmethod
     def slice_data(data: bytes, chunk_size: int) -> (list, bool):
-        """
-        slice data
-        :param data: wav data
-        :param chunk_size: the segment size in one request
-        :return: segment data, last flag
-        """
+        
         data_len = len(data)
         offset = 0
         while offset + chunk_size < data_len:
@@ -277,29 +244,29 @@ class AsrWsClient:
         payload_bytes = str.encode(json.dumps(request_params))
         payload_bytes = gzip.compress(payload_bytes)
         full_client_request = bytearray(generate_full_default_header())
-        full_client_request.extend((len(payload_bytes)).to_bytes(4, 'big'))  # payload size(4 bytes)
-        full_client_request.extend(payload_bytes)  # payload
+        full_client_request.extend((len(payload_bytes)).to_bytes(4, 'big')) 
+        full_client_request.extend(payload_bytes) 
         header = None
         if self.auth_method == "token":
             header = self.token_auth()
         elif self.auth_method == "signature":
             header = self.signature_auth(full_client_request)
-        async with websockets.connect(self.ws_url, additional_headers=header, max_size=1000000000) as ws:
-            # 发送 full client request
+        async with websockets.connect(self.ws_url, extra_headers=header, max_size=1000000000) as ws:
+
             await ws.send(full_client_request)
             res = await ws.recv()
             result = parse_response(res)
             if 'payload_msg' in result and result['payload_msg']['code'] != self.success_code:
                 return result
             for seq, (chunk, last) in enumerate(AsrWsClient.slice_data(wav_data, segment_size), 1):
-                # if no compression, comment this line
+
                 payload_bytes = gzip.compress(chunk)
                 audio_only_request = bytearray(generate_audio_default_header())
                 if last:
                     audio_only_request = bytearray(generate_last_audio_default_header())
                 audio_only_request.extend((len(payload_bytes)).to_bytes(4, 'big'))  # payload size(4 bytes)
                 audio_only_request.extend(payload_bytes)  # payload
-                # 发送 audio-only client request
+
                 await ws.send(audio_only_request)
                 res = await ws.recv()
                 result = parse_response(res)
@@ -324,12 +291,7 @@ class AsrWsClient:
 
 
 def execute_one(audio_item, cluster, **kwargs):
-    """
 
-    :param audio_item: {"id": xxx, "path": "xxx"}
-    :param cluster:集群名称
-    :return:
-    """
     assert 'id' in audio_item
     assert 'path' in audio_item
     audio_id = audio_item['id']
@@ -345,6 +307,7 @@ def execute_one(audio_item, cluster, **kwargs):
     return {"id": audio_id, "path": audio_path, "result": result}
 
 def test_one():
+
     result = execute_one(
         {
             'id': 1,

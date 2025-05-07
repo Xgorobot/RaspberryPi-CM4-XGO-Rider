@@ -1,20 +1,10 @@
 import RPi.GPIO as GPIO
 import time,os
 import spidev as SPI
-from PIL import Image, ImageDraw, ImageFont
-import xgoscreen.LCD_2inch as LCD_2inch
+
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
-splash_theme_color = (15, 21, 46)
-# Display Init
-display = LCD_2inch.LCD_2inch()
-display.Init()
-display.clear()
-# Init Splash
-splash = Image.new("RGB", (display.height, display.width), splash_theme_color)
-draw = ImageDraw.Draw(splash)
-display.ShowImage(splash)
 class Button:
     def __init__(self):
         self.key1=24

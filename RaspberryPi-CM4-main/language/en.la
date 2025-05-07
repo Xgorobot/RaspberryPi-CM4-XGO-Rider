@@ -85,6 +85,7 @@
         "GPTREC":"GPTRec",
         "GPTCMD":"RobotGPT",
         "GPTFREE":"Q&A",
-        "XIAOZHI":"XIAOZHI"
+        "XIAOZHI":"XIAOZHI",
+	"AGENT":"Agent"
     }
 }

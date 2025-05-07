@@ -16,6 +16,7 @@ START_THRESHOLD = 70000  # 开始录音的音量阈值
 END_THRESHOLD = 40000  # 停止录音的音量阈值
 ENDLAST = 10
 
+
 def calculate_volume(data):
     """计算音频数据的音量"""
     rt_data = np.frombuffer(data, dtype=np.int16)
@@ -33,7 +34,7 @@ def start_recording(p, stream):
     for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
         data = stream.read(CHUNK)
         volume = calculate_volume(data)
-        print(f"当前音量: {volume} |阈值: 开始={START_THRESHOLD} 结束={END_THRESHOLD}", end='\r')
+        print(f"当前音量: {volume} | 阈值: 开始={START_THRESHOLD} 结束={END_THRESHOLD}", end='\r')
         if not start_recording_flag:
             if volume > START_THRESHOLD:
                 print("开始录音...")
@@ -54,6 +55,3 @@ def start_recording(p, stream):
     wf.writeframes(b''.join(frames))
     wf.close()
     print(f"录音已保存为 {SAVE_FILE}")
-
-if __name__ == "__main__":
-     start_recording()
