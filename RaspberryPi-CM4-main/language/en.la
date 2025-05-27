@@ -83,8 +83,9 @@
         "FOLLOWLINE":"FollowLine",
         "GPTDRAW":"GPTDraw",
         "GPTREC":"GPTRec",
-        "GPTCMD":"RobotGPT",
+        "GPTCMD":"EI",
         "GPTFREE":"Q&A",
-        "XIAOZHI":"XIAOZHI"
+        "XIAOZHI":"XIAOZHI",
+	"AGENT":"Agent"
     }
 }

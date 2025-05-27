@@ -44,22 +44,24 @@ display.ShowImage(splash)
 MENU_ITEM_PARENT_PATH = "./pics/"
 MENU_ITEMS = [
         # pic kinds program show
-        ("biaoyan", "1movement", "dog_show", la["DEMOEN"]["SHOW"]),
+        ("dog_show", "1movement", "dog_show", la["DEMOEN"]["SHOW"]),
         ("network", "2vision", "network", la["DEMOEN"]["NETWORK"]),
         ("xiaozhi","3vision","xiaozhi",la["DEMOEN"]["XIAOZHI"]),
         ("speech", "4voice", "speech", la["DEMOEN"]["SPEECH"]),
-        ("ei", "5voice", "ei", la["DEMOEN"]["GPTCMD"]),
-        ("face_mask", "6vision", "face_mask", la["DEMOEN"]["MASK"]),
-        ("face_decetion", "7vision", "face_decetion", la["DEMOEN"]["FACETRACK"]),
-        ("hands", "8vision", "hands", la["DEMOEN"]["HANDS"]),
-        ("height", "9vision", "handh", la["DEMOEN"]["HEIGHT"]),
-        ("pose", "10vision", "pose_dog", la["DEMOEN"]["POSE"]),
-        ("color", "11vision", "color", la["DEMOEN"]["COLOR"]),
-        ("qrcode", "12vision", "qrcode", la["DEMOEN"]["QRCODE"]),
-        ("wifi_set", "13vision", "wifi_set", la["DEMOEN"]["WIFISET"]),
-        ("language", "14vision", "language", la["DEMOEN"]["LANGUAGE"]),
-        ("volume", "15vision", "volume", la["DEMOEN"]["VOLUME"]),
-        ("device", "16vision", "device", la["DEMOEN"]["DEVICE"])
+        ("ei", "5vision", "ei", la["DEMOEN"]["GPTCMD"]),
+        ("agent", "6vision", "agent", la["DEMOEN"]["AGENT"]),
+        ("face_mask", "7vision", "face_mask", la["DEMOEN"]["MASK"]),
+        ("face_decetion", "8vision", "face_decetion", la["DEMOEN"]["FACETRACK"]),
+        ("hands", "9vision", "hands", la["DEMOEN"]["HANDS"]),
+        ("height", "10vision", "handh", la["DEMOEN"]["HEIGHT"]),
+        ("pose", "11vision", "pose_dog", la["DEMOEN"]["POSE"]),
+        ("color", "12vision", "color", la["DEMOEN"]["COLOR"]),
+        ("qrcode", "13vision", "qrcode", la["DEMOEN"]["QRCODE"]),
+        ("group", "14vision", "group", la["DEMOEN"]["GROUP"]),
+        ("wifi_set", "15vision", "wifi_set", la["DEMOEN"]["WIFISET"]),
+        ("language", "16vision", "language", la["DEMOEN"]["LANGUAGE"]),
+        ("volume", "17vision", "volume", la["DEMOEN"]["VOLUME"]),
+        ("device", "18vision", "device", la["DEMOEN"]["DEVICE"])
     ]
 
 SELECT_BOX = [80, 68]
@@ -388,15 +390,7 @@ while True:
             elif MENU_ITEMS[MENU_CURRENT_SELECT][2] == "qrcode":
                 os.system("python3 ./demos/qrcode.py")
             elif MENU_ITEMS[MENU_CURRENT_SELECT][2] == "speech":
-                
-                result_la = language()
-                if result_la == "cn":
-                  print("la is cn")
-                  os.system("python ./demos/speechCN/speech.py")
-                else:
-                  print("la is en")
-                  os.system("python ./demos/speechEN/speech.py")
-                
+                os.system("python3 ./demos/speech/speech.py")
             elif MENU_ITEMS[MENU_CURRENT_SELECT][2] == "handh":
                 os.system("python3 ./demos/hp.py")
             elif MENU_ITEMS[MENU_CURRENT_SELECT][2] == "color":
@@ -412,11 +406,13 @@ while True:
             elif MENU_ITEMS[MENU_CURRENT_SELECT][2] == "volume":
                 os.system("python3 ./demos/volume.py")
             elif MENU_ITEMS[MENU_CURRENT_SELECT][2] == "xiaozhi":
-                os.system("sudo -u pi python ./demos/xiaozhi/xiaozhi.py")
+                os.system("sudo -u pi python ./demos/xiaozhi_test/main.py")
             elif MENU_ITEMS[MENU_CURRENT_SELECT][2] == "pose_dog":
                 os.system("python3 ./demos/pose_dog.py")
             elif MENU_ITEMS[MENU_CURRENT_SELECT][2] == "ei":
-                os.system("python3 ./demos/EI/ei.py")
+                os.system("python3 ./demos/speech/ei.py")
+            elif MENU_ITEMS[MENU_CURRENT_SELECT][2] == "agent":
+                os.system("sudo python3 ./demos/speech/coze.py")
             print("program done")
             draw_title_bar(MENU_CURRENT_SELECT)
         except BaseException as e:
