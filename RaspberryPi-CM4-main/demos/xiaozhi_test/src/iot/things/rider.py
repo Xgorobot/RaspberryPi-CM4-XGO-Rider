@@ -7,13 +7,13 @@ class Rider(Thing):
     def __init__(self):
         # 调用父类初始化方法，设置设备名称和描述
         # 第一个参数是设备ID(全局唯一)，第二个参数是对设备的描述文本
-        super().__init__("MychanicalRiderDog", "轮足机械人rider")
+        super().__init__("MychanicalRider", "双轮足rider")
 
-        # 机械狗状态变量定义
+        # 双轮足状态变量定义
         self.rider = XGO("xgorider")
 
-        self.direction = 'stop'  # 定义机械狗的移动方向，初始为停止
-        self.speed = 0  # 定义机械狗的移动速度，初始为0
+        self.direction = 'stop'  # 定义双轮足的移动方向，初始为停止
+        self.speed = 0  # 定义双轮足的移动速度，初始为0
         self.move_time = 0  # 移动时间
 
 
@@ -67,83 +67,83 @@ class Rider(Thing):
         # =========================
         # 注册设备属性（状态值）
         # =========================
-        self.add_property("direction", "机械人的移动方向(forward, backward)",
+        self.add_property("direction", "双轮足的移动方向(forward, backward)",
                           lambda: self.direction)
-        self.add_property("speed", "机械人的移动速度,向前移动为正，向后移动为负，取值范围为[-1.5,1.5]",
+        self.add_property("speed", "双轮足的移动速度,向前移动为正，向后移动为负，取值范围为[-1.5,1.5]",
                           lambda: self.speed)
-        self.add_property("move_time", "机械人的移动时间",
+        self.add_property("move_time", "双轮足的移动时间",
                           lambda: self.move_time)
 
         self.add_property("last_update_time", "最后一次状态更新时间",
                           lambda: self.last_update_time)
 
-        self.add_property("turn_speed", "机械人的转动速度,向左转为正，向右转为负，取值范围是[-360,360]",
+        self.add_property("turn_speed", "双轮足的转动速度,向左转为正，向右转为负，取值范围是[-360,360]",
                           lambda: self.turn_speed)
-        self.add_property("turn_direction", "机械人的转动方向(left, right)",
+        self.add_property("turn_direction", "双轮足的转动方向(left, right)",
                           lambda: self.turn_direction)
-        self.add_property("turn_time", "机械人的转动时间",
+        self.add_property("turn_time", "双轮足的转动时间",
                           lambda: self.turn_time)
 
-        self.add_property("action", "机械人的预设动作包括'左右摇摆','高低起伏','前进后退','四方蛇形','升降旋转','圆周晃动'",
+        self.add_property("action", "双轮足的预设动作包括'左右摇摆','高低起伏','前进后退','四方蛇形','升降旋转','圆周晃动'",
                           lambda: self.action)
 
    
-        self.add_property("perform", "机械人的表演模式是否开启",
+        self.add_property("perform", "双轮足的表演模式是否开启",
                           lambda: self.perform)
 
 
-        self.add_property("led_index_1", "机械人背面的左上灯是否打开",
+        self.add_property("led_index_1", "双轮足背面的左上灯是否打开",
                           lambda: self.is_led_1)
-        self.add_property("led_index_2", "机械人背面的左下灯是否打开",
+        self.add_property("led_index_2", "双轮足背面的左下灯是否打开",
                           lambda: self.is_led_2)
-        self.add_property("led_index_3", "机械人背面的右下灯是否打开",
+        self.add_property("led_index_3", "双轮足背面的右下灯是否打开",
                           lambda: self.is_led_3)
-        self.add_property("led_index_4", "机械人背面的右上灯是否打开",
+        self.add_property("led_index_4", "双轮足背面的右上灯是否打开",
                           lambda: self.is_led_4)
-        self.add_property("led_color_1_R", "机械人的左上灯光颜色，代表RGB的亮度中的R，RGB为[0,0,0]代表灭，[255,255,255]代表最亮的白光",
+        self.add_property("led_color_1_R", "双轮足的左上灯光颜色，代表RGB的亮度中的R，RGB为[0,0,0]代表灭，[255,255,255]代表最亮的白光",
                           lambda: self.led_color_1_R)
-        self.add_property("led_color_1_G", "机械人的左上灯光颜色，代表RGB的亮度中的G，RGB为[0,0,0]代表灭，[255,255,255]代表最亮的白光",
+        self.add_property("led_color_1_G", "双轮足的左上灯光颜色，代表RGB的亮度中的G，RGB为[0,0,0]代表灭，[255,255,255]代表最亮的白光",
                           lambda: self.led_color_1_G)
-        self.add_property("led_color_1_B", "机械人的左上灯光颜色，代表RGB的亮度中的B，RGB为[0,0,0]代表灭，[255,255,255]代表最亮的白光",
+        self.add_property("led_color_1_B", "双轮足的左上灯光颜色，代表RGB的亮度中的B，RGB为[0,0,0]代表灭，[255,255,255]代表最亮的白光",
                           lambda: self.led_color_1_B)
-        self.add_property("led_color_2_R", "机械人的左下灯光颜色，代表RGB的亮度中的R，RGB为[0,0,0]代表灭，[255,255,255]代表最亮的白光",
+        self.add_property("led_color_2_R", "双轮足的左下灯光颜色，代表RGB的亮度中的R，RGB为[0,0,0]代表灭，[255,255,255]代表最亮的白光",
                           lambda: self.led_color_2_R)
-        self.add_property("led_color_2_G", "机械人的左下灯光颜色，代表RGB的亮度中的G，RGB为[0,0,0]代表灭，[255,255,255]代表最亮的白光",
+        self.add_property("led_color_2_G", "双轮足的左下灯光颜色，代表RGB的亮度中的G，RGB为[0,0,0]代表灭，[255,255,255]代表最亮的白光",
                           lambda: self.led_color_2_G)
-        self.add_property("led_color_2_B", "机械人的左下灯光颜色，代表RGB的亮度中的B，RGB为[0,0,0]代表灭，[255,255,255]代表最亮的白光",
+        self.add_property("led_color_2_B", "双轮足的左下灯光颜色，代表RGB的亮度中的B，RGB为[0,0,0]代表灭，[255,255,255]代表最亮的白光",
                           lambda: self.led_color_2_B)
-        self.add_property("led_color_3_R", "机械人的右下灯光颜色，代表RGB的亮度中的R，RGB为[0,0,0]代表灭，[255,255,255]代表最亮的白光",
+        self.add_property("led_color_3_R", "双轮足的右下灯光颜色，代表RGB的亮度中的R，RGB为[0,0,0]代表灭，[255,255,255]代表最亮的白光",
                           lambda: self.led_color_3_R)
-        self.add_property("led_color_3_G", "机械人的右下灯光颜色，代表RGB的亮度中的G，RGB为[0,0,0]代表灭，[255,255,255]代表最亮的白光",
+        self.add_property("led_color_3_G", "双轮足的右下灯光颜色，代表RGB的亮度中的G，RGB为[0,0,0]代表灭，[255,255,255]代表最亮的白光",
                           lambda: self.led_color_3_G)
-        self.add_property("led_color_3_B", "机械人的右下灯光颜色，代表RGB的亮度中的B，RGB为[0,0,0]代表灭，[255,255,255]代表最亮的白光",
+        self.add_property("led_color_3_B", "双轮足的右下灯光颜色，代表RGB的亮度中的B，RGB为[0,0,0]代表灭，[255,255,255]代表最亮的白光",
                           lambda: self.led_color_3_B)
-        self.add_property("led_color_4_R", "机械人的右上灯光颜色，代表RGB的亮度中的R，RGB为[0,0,0]代表灭，[255,255,255]代表最亮的白光",
+        self.add_property("led_color_4_R", "双轮足的右上灯光颜色，代表RGB的亮度中的R，RGB为[0,0,0]代表灭，[255,255,255]代表最亮的白光",
                           lambda: self.led_color_4_R)
-        self.add_property("led_color_4_G", "机械人的右上灯光颜色，代表RGB的亮度中的G，RGB为[0,0,0]代表灭，[255,255,255]代表最亮的白光",
+        self.add_property("led_color_4_G", "双轮足的右上灯光颜色，代表RGB的亮度中的G，RGB为[0,0,0]代表灭，[255,255,255]代表最亮的白光",
                           lambda: self.led_color_4_G)
-        self.add_property("led_color_4_B", "机械人的右上灯光颜色，代表RGB的亮度中的B，RGB为[0,0,0]代表灭，[255,255,255]代表最亮的白光",
+        self.add_property("led_color_4_B", "双轮足的右上灯光颜色，代表RGB的亮度中的B，RGB为[0,0,0]代表灭，[255,255,255]代表最亮的白光",
                           lambda: self.led_color_4_B)
 
 
-        self.add_property("height", "机械人的高度取值范围是[60,120]",
+        self.add_property("height", "双轮足的高度取值范围是[60,120]",
                           lambda: self.height)
 
-        self.add_property("roll", "机械人的机身姿态调节幅度,单位为°,取值范围为[-17,17]",
+        self.add_property("roll", "双轮足的机身姿态调节幅度,单位为°,取值范围为[-17,17]",
                           lambda: self.roll)
 
 
-        self.add_property("periodic_z", "机械人的机身周期蹲起的周期（反映了周期蹲起的速率），单位s,取值范围[2,4];输入0代表停止运动",
+        self.add_property("periodic_z", "双轮足的机身周期蹲起的周期（反映了周期蹲起的速率），单位s,取值范围[2,4];输入0代表停止运动",
                           lambda: self.periodic_z)
-        self.add_property("periodic_z_time", "机械人的机身周期蹲起的持续时间",
+        self.add_property("periodic_z_time", "双轮足的机身周期蹲起的持续时间",
                           lambda: self.periodic_z_time)
 
-        self.add_property("periodic_roll", "机械人的机身周期晃动周期（反映了周期晃动的速率），单位s,取值范围[2,4];输入0代表停止运动",
+        self.add_property("periodic_roll", "双轮足的机身周期晃动周期（反映了周期晃动的速率），单位s,取值范围[2,4];输入0代表停止运动",
                           lambda: self.periodic_roll)
-        self.add_property("periodic_roll_time", "机械人的机身周期晃动的持续时间",
+        self.add_property("periodic_roll_time", "双轮足的机身周期晃动的持续时间",
                           lambda: self.periodic_roll_time)
 
-        self.add_property("reset", "机器人停止所有运动，所有状态全部恢复到初始状态，如果是倒地状态，调用该方法后会站起",
+        self.add_property("reset", "双轮足停止所有运动，所有状态全部恢复到初始状态，如果是倒地状态，调用该方法后会站起",
                           lambda: self.reset)
 
         self.add_property("is_balance", "是否开启双轮足平衡模式，自稳状态下，轮足将自动调节Roll以保持背部处于水平位置。",
@@ -155,7 +155,7 @@ class Rider(Thing):
 
         self.add_method(
             "MoveForward",
-            "让双轮足机器人向前移动",
+            "让双轮足向前移动",
             [
                 Parameter("speed", "移动速度(0-1.5之间的数字)", ValueType.NUMBER, True),
                 Parameter("move_time", "移动时间单位秒", ValueType.NUMBER, True)
@@ -165,7 +165,7 @@ class Rider(Thing):
 
         self.add_method(
             "MoveBackward",
-            "让双轮足机器人向后移动",
+            "让双轮足向后移动",
             [
                 Parameter("speed", "移动速度(0-1.5之间的数字)", ValueType.NUMBER, True),
                 Parameter("move_time", "移动时间单位秒", ValueType.NUMBER, True)
@@ -175,7 +175,7 @@ class Rider(Thing):
 
         self.add_method(
             "Turnright",
-            "让双轮足机器人右转",
+            "让双轮足右转",
             [
                 Parameter('turn_speed', "转动速度(0-360之间的数字)单位度/秒", ValueType.NUMBER, True),
                 Parameter("turn_time", "移动时间单位秒", ValueType.NUMBER, True)
@@ -185,7 +185,7 @@ class Rider(Thing):
 
         self.add_method(
             "Turnleft",
-            "让双轮足机器人左转",
+            "让双轮足左转",
             [
                 Parameter('turn_speed', "转动速度(0-360之间的数字)单位度/秒", ValueType.NUMBER, True),
                 Parameter("turn_time", "移动时间单位秒", ValueType.NUMBER, True)
@@ -195,7 +195,7 @@ class Rider(Thing):
 
         self.add_method(
             "action",
-            "机械狗执行预设动作",
+            "双轮足执行预设动作",
             [
                 Parameter('action',
              '取值范围为1-6,分别对应[左右摇摆, 高低起伏, 前进后退, 四方蛇形, 升降旋转, 圆周晃动 ]。',
@@ -207,7 +207,7 @@ class Rider(Thing):
 
         self.add_method(
             "perform",
-            "机械狗的表演模式",
+            "双轮足的表演模式",
             [
                 Parameter('perform', '0代表关闭、1代表开启', ValueType.NUMBER, True)
             ],
@@ -216,7 +216,7 @@ class Rider(Thing):
 
         self.add_method(
             "led_1",
-            "双轮组机器人的左上灯颜色",
+            "双轮足机器人的左上灯颜色",
             [
                 Parameter('R', 'RGB颜色中R的亮度取值为[0，255]', ValueType.NUMBER, True),
                 Parameter('G', 'RGB颜色中G的亮度取值为[0，255]', ValueType.NUMBER, True),
@@ -227,7 +227,7 @@ class Rider(Thing):
 
         self.add_method(
             "led_2",
-            "双轮组机器人的左下灯颜色",
+            "双轮足机器人的左下灯颜色",
             [
                 Parameter('R', 'RGB颜色中R的亮度取值为[0，255]', ValueType.NUMBER, True),
                 Parameter('G', 'RGB颜色中G的亮度取值为[0，255]', ValueType.NUMBER, True),
@@ -238,7 +238,7 @@ class Rider(Thing):
 
         self.add_method(
             "led_3",
-            "双轮组机器人的右下灯颜色",
+            "双轮足机器人的右下灯颜色",
             [
                 Parameter('R', 'RGB颜色中R的亮度取值为[0，255]', ValueType.NUMBER, True),
                 Parameter('G', 'RGB颜色中G的亮度取值为[0，255]', ValueType.NUMBER, True),
@@ -249,7 +249,7 @@ class Rider(Thing):
 
         self.add_method(
             "led_4",
-            "双轮组机器人的右上灯颜色",
+            "双轮足机器人的右上灯颜色",
             [
                 Parameter('R', 'RGB颜色中R的亮度取值为[0，255]', ValueType.NUMBER, True),
                 Parameter('G', 'RGB颜色中G的亮度取值为[0，255]', ValueType.NUMBER, True),
@@ -289,8 +289,8 @@ class Rider(Thing):
             "periodic_z",
             "表示机身周期蹲起",
             [
-                Parameter('data', '机械人的机身周期蹲起的周期（反映了周期蹲起的速率），单位s,取值范围[2,4];输入0代表停止运动', ValueType.NUMBER, True),
-                Parameter('time','机械人的机身周期蹲起的持续时间',ValueType.NUMBER, True)
+                Parameter('data', '双轮足的机身周期蹲起的周期（反映了周期蹲起的速率），单位s,取值范围[2,4];输入0代表停止运动', ValueType.NUMBER, True),
+                Parameter('time','双轮足的机身周期蹲起的持续时间',ValueType.NUMBER, True)
             ],
             lambda params: self._periodic_z(params["data"].get_value(), params["time"].get_value())
         )
@@ -299,8 +299,8 @@ class Rider(Thing):
             "periodic_roll",
             "表示机身周期晃动",
             [
-                Parameter('data', '机械人的机身周期晃动的周期（反映了周期晃动的速率），单位s,取值范围[2,4];输入0代表停止运动', ValueType.NUMBER, True),
-                Parameter('time', '机械人的机身周期晃动的持续时间', ValueType.NUMBER, True)
+                Parameter('data', '双轮足的机身周期晃动的周期（反映了周期晃动的速率），单位s,取值范围[2,4];输入0代表停止运动', ValueType.NUMBER, True),
+                Parameter('time', '双轮足的机身周期晃动的持续时间', ValueType.NUMBER, True)
             ],
             lambda params: self._periodic_roll(params["data"].get_value(), params["time"].get_value())
         )
@@ -460,7 +460,7 @@ class Rider(Thing):
 
         return {
             "status": "success",
-            "message": f"双轮组机器人的高度{self.height}"
+            "message": f"双轮足机器人的高度{self.height}"
         }
 
     def _roll(self, data):
@@ -469,7 +469,7 @@ class Rider(Thing):
 
         return {
             "status": "success",
-            "message": f"双轮组机器人的机身姿态幅度{self.roll}"
+            "message": f"双轮足机器人的机身姿态幅度{self.roll}"
         }
 
     def _periodic_z(self, data, time):
@@ -481,7 +481,7 @@ class Rider(Thing):
 
         return {
             "status": "success",
-            "message": f"双轮组机器人以蹲起周期{self.periodic_z}持续{self.periodic_z_time}"
+            "message": f"双轮足机器人以蹲起周期{self.periodic_z}持续{self.periodic_z_time}"
         }
 
     def _periodic_roll(self, data, time):
@@ -493,7 +493,7 @@ class Rider(Thing):
 
         return {
             "status": "success",
-            "message": f"双轮组机器人以晃动周期{self.periodic_z}持续{self.periodic_z_time}"
+            "message": f"双轮足机器人以晃动周期{self.periodic_z}持续{self.periodic_z_time}"
         }
 
 
@@ -501,5 +501,5 @@ class Rider(Thing):
         self.rider.rider_reset()
         return {
             "status": "success",
-            "message": f"双轮组机器人已完成初始化"
+            "message": f"双轮足机器人已完成初始化"
         }
