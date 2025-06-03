@@ -11,6 +11,9 @@ from PIL import Image, ImageDraw, ImageFont
 import xgoscreen.LCD_2inch as LCD_2inch
 splash_theme_color = (15, 21, 46)
 la=language()
+
+#version=2.0
+
 # Display Init
 display = LCD_2inch.LCD_2inch()
 display.clear()
@@ -24,8 +27,8 @@ draw = ImageDraw.Draw(splash)
 text_color = (255, 255, 255)
 color = (102, 178, 255)
 gray_color = (128, 128, 128)
-rectangle_x = (display.width - 120) // 2  # 矩形条居中的x坐标
-rectangle_y = 50  # 矩形条y坐标
+rectangle_x = (display.width - 120) // 2  
+rectangle_y = 50  
 rectangle_width = 200
 rectangle_height = 30
 draw.rectangle((rectangle_x, rectangle_y, rectangle_x + rectangle_width, rectangle_y + rectangle_height), fill=color)
@@ -37,15 +40,7 @@ else:
 display.ShowImage(splash)
 
 logger = get_logger(__name__)
-'''
-def kill_pulseaudio():
-    """关闭 PulseAudio 服务"""
-    try:
-        subprocess.run(["pulseaudio", "--kill"], check=True)
-        logger.info("已关闭 PulseAudio")
-    except subprocess.CalledProcessError as e:
-        logger.warning(f"关闭 PulseAudio 失败: {e}")
-'''
+
 def kill_pulseaudio():
     try:
         result = subprocess.run(["pgrep", "-x", "pulseaudio"], capture_output=True, text=True)
@@ -75,15 +70,7 @@ def kill_pulseaudio():
     except Exception as e:
         logger.error(f"检查/关闭 PulseAudio 时发生异常: {e}")
         return False
-'''
-def start_pulseaudio():
-    """启动 PulseAudio 服务"""
-    try:
-        subprocess.run(["pulseaudio", "--start"], check=True)
-        logger.info("已启动 PulseAudio")
-    except subprocess.CalledProcessError as e:
-        logger.warning(f"启动 PulseAudio 失败: {e}")
-'''
+
 def start_pulseaudio():
     try:
         # 先尝试正常关闭
@@ -128,46 +115,6 @@ def main():
         start_pulseaudio()  # 确保无论如何都恢复 PulseAudio
 
     return 0
-import requests
-TEST_NETWORK_URL = "http://www.baidu.com"
-SPLASH_COLOR = (15, 21, 46)
-la=language()
-from key import language
 
-def check_network():
-    try:
-        requests.get(TEST_NETWORK_URL, timeout=2)
-        print("Net is connection")
-        return True
-    except:
-        print("Net is unconnection")
-        return False
-
-
-
-import os
-import xgoscreen.LCD_2inch as LCD_2inch
-from PIL import Image, ImageDraw, ImageFont
-FONT_PATH = "/home/pi/model/msyh.ttc"
-FONT_SIZE = 20
-display = LCD_2inch.LCD_2inch()
-display.Init()
-splash = Image.new("RGB", (display.height, display.width), SPLASH_COLOR)
-draw = ImageDraw.Draw(splash)
-font = ImageFont.truetype(FONT_PATH, FONT_SIZE)
-def show_message(text, color=(255, 255, 255)):
-    draw.rectangle((0, 0, display.height, display.width), fill=SPLASH_COLOR)
-    draw.text((80, 100), text, fill=color, font=font)
-    display.ShowImage(splash)
 if __name__ == "__main__":
-    if not check_network():
-        print("网络未连接")
-        if la == "cn":
-            show_message("网络未连接", color=(255, 0, 0))
-            time.sleep(2)
-            os._exit(0)
-        else:
-            show_message("Network not connected", color=(255, 0, 0))
-            time.sleep(2)
-            os._exit(0)
     sys.exit(main())
