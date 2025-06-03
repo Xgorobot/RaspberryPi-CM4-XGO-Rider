@@ -86,6 +86,7 @@
         "GPTCMD":"EI",
         "GPTFREE":"Q&A",
         "XIAOZHI":"XIAOZHI",
-	"AGENT":"Agent"
+	      "AGENT":"Agent",
+	      "JOYSTICK":"Handle"
     }
 }
