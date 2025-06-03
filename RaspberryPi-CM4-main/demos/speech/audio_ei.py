@@ -190,8 +190,8 @@ def draw_cir(ch):
 
 def start_recording(p, stream_a, audio_stream, timel=3, save_file="recorded_audio.wav"):
     global automark, quitmark
-    start_threshold = 120000
-    end_threshold = 40000
+    start_threshold = 12000
+    end_threshold = 6000
     endlast = 15
     max_record_time = 8 
     
