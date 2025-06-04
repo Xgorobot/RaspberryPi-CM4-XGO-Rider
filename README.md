@@ -13,6 +13,7 @@ XGO-Rider，一个有趣的双轮足机器人。
   - [📜 更新日志](#-更新日志)
     - [2025-04-14](#2025-04-14)
     - [2025-05-17](#2025-05-17)
+    - [2025-06-06](#2025-06-06)
   - [贡献](#贡献)
   - [许可证](#许可证)
   - [致谢](#致谢)
@@ -62,6 +63,14 @@ XGO-Rider是一款基于树莓派的桌面级双轮足开源开发平台，内�
 1. 添加了/RaspberryPi-CM4-main/demos/speech/ei.py 具身智能功能
 2. 添加了/RaspberryPi-CM4-main/demos/speech/coze.py 智能体功能
 3. 添加了/RaspberryPi-CM4-main/demos/xiaozhi_test 小智对话及控制机器人功能
+### 2025-06-06
+- **代码改进**
+1. 优化了/RaspberryPi-CM4-main/demos/speech/ei.py、/RaspberryPi-CM4-main/demos/speech/coze.py、/RaspberryPi-CM4-main/demos/speech/speech.py三个功能在未联网状态下的UI交互
+2. /RaspberryPi-CM4-main/demos/device.py 更新了版本号
+3. 修改了wifi页面底部与背景颜色不符的问题
+4. 把损坏以及未上传的图标进行重新上传
+- **功能新增**
+1. 添加了/RaspberryPi-CM4-main/demos/dog_Joystick.py 手柄控制功能
 ## 贡献
 欢迎贡献！我们欢迎任何建议、修复和功能增强。如果你有兴趣为这个项目贡献，可以按照以下步骤操作:  
 1.Fork 本仓库  
