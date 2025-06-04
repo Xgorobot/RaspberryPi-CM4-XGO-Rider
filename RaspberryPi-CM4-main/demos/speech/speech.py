@@ -26,6 +26,12 @@ DOG_PORT = '/dev/ttyAMA0'
 DOG_VERSION = "xgorider"
 TEST_NETWORK_URL = "http://www.baidu.com"
 
+
+WIFI_OFFLINE_PATH = "/home/pi/RaspberryPi-CM4-main/pics/offline.png"
+font2 = ImageFont.truetype("/home/pi/model/msyh.ttc", 22)
+color_white = (255, 255, 255)
+mic_purple = (24, 47, 223)
+
 ACTION_MAP = {
     "Dance": (23, 6),
     "Pushups": (21, 8),
@@ -62,6 +68,13 @@ class DogController:
         
         # 启动按键检测线程
         self._start_button_thread()
+        try:
+
+            wifi_img = Image.open(WIFI_OFFLINE_PATH)
+            self.nowifi_image = Image.new("RGB", wifi_img.size, SPLASH_COLOR)
+            self.nowifi_image.paste(wifi_img, (0, 0), wifi_img)  
+        except Exception as e:
+            print(f"加载图片失败: {e}")
 
     def _start_button_thread(self):
         def check_button():
@@ -104,26 +117,37 @@ class DogController:
         return False
 
     def check_network(self):
-        max_attempts = 5
-        attempt = 0
-        
-        while attempt < max_attempts:
-            try:
-                requests.get(TEST_NETWORK_URL, timeout=1)
-                print("Net is connected")
-                self.network_available = True
-                return True
-            except:
-                print(f"Network connection attempt {attempt + 1} failed")
-                attempt += 1
-                time.sleep(1)
-        
-        print("Network connection failed after 5 attempts")
-        if la == "cn":
-            self.show_message("网络未连接", color=(255, 0, 0))
-        else:
-            self.show_message("Network not connected", color=(255, 0, 0))
-        return False
+       max_attempts = 5
+       attempt = 0
+       
+       while attempt < max_attempts:
+           try:
+               requests.get(TEST_NETWORK_URL, timeout=1)
+               print("Net is connected")
+               self.network_available = True
+               return True  # 直接返回True，不显示任何内容
+           except:
+               print(f"Network connection attempt {attempt + 1} failed")
+               attempt += 1
+               time.sleep(1)
+       
+       print("Network connection failed after 5 attempts")
+       self.network_available = False
+       self.draw.rectangle((0, 0, self.display.height, self.display.width), fill=SPLASH_COLOR)
+       img_width, img_height = self.nowifi_image.size
+       x_pos = (self.display.height - img_width) // 2
+       y_pos = 40
+       self.splash.paste(self.nowifi_image, (x_pos, y_pos))
+       if la == "cn":
+           text = "WIFI未连接或无网络"
+       else:
+           text = "WIFI is not connected"
+       text_width = self.draw.textlength(text, font=font2)
+       x_position = (self.display.height - text_width) // 2
+       self.draw.text((x_position, 170), text, fill=color_white, font=font2)
+       self.display.ShowImage(self.splash)
+       
+       return False
             
 
     def run(self):

@@ -50,18 +50,19 @@ MENU_ITEMS = [
         ("speech", "4voice", "speech", la["DEMOEN"]["SPEECH"]),
         ("ei", "5vision", "ei", la["DEMOEN"]["GPTCMD"]),
         ("agent", "6vision", "agent", la["DEMOEN"]["AGENT"]),
-        ("face_mask", "7vision", "face_mask", la["DEMOEN"]["MASK"]),
-        ("face_decetion", "8vision", "face_decetion", la["DEMOEN"]["FACETRACK"]),
-        ("hands", "9vision", "hands", la["DEMOEN"]["HANDS"]),
-        ("height", "10vision", "handh", la["DEMOEN"]["HEIGHT"]),
-        ("pose", "11vision", "pose_dog", la["DEMOEN"]["POSE"]),
-        ("color", "12vision", "color", la["DEMOEN"]["COLOR"]),
-        ("qrcode", "13vision", "qrcode", la["DEMOEN"]["QRCODE"]),
-        ("group", "14vision", "group", la["DEMOEN"]["GROUP"]),
-        ("wifi_set", "15vision", "wifi_set", la["DEMOEN"]["WIFISET"]),
-        ("language", "16vision", "language", la["DEMOEN"]["LANGUAGE"]),
-        ("volume", "17vision", "volume", la["DEMOEN"]["VOLUME"]),
-        ("device", "18vision", "device", la["DEMOEN"]["DEVICE"])
+        ("dog_Joystick", "7vision", "dog_Joystick", la["DEMOEN"]["JOYSTICK"]),
+        ("face_mask", "8vision", "face_mask", la["DEMOEN"]["MASK"]),
+        ("face_decetion", "9vision", "face_decetion", la["DEMOEN"]["FACETRACK"]),
+        ("hands", "10vision", "hands", la["DEMOEN"]["HANDS"]),
+        ("height", "11vision", "handh", la["DEMOEN"]["HEIGHT"]),
+        ("pose", "12vision", "pose_dog", la["DEMOEN"]["POSE"]),
+        ("color", "13vision", "color", la["DEMOEN"]["COLOR"]),
+        ("qrcode", "14vision", "qrcode", la["DEMOEN"]["QRCODE"]),
+        ("group", "15vision", "group", la["DEMOEN"]["GROUP"]),
+        ("wifi_set", "16vision", "wifi_set", la["DEMOEN"]["WIFISET"]),
+        ("language", "17vision", "language", la["DEMOEN"]["LANGUAGE"]),
+        ("volume", "18vision", "volume", la["DEMOEN"]["VOLUME"]),
+        ("device", "19vision", "device", la["DEMOEN"]["DEVICE"])
     ]
 
 SELECT_BOX = [80, 68]
@@ -413,6 +414,8 @@ while True:
                 os.system("python3 ./demos/speech/ei.py")
             elif MENU_ITEMS[MENU_CURRENT_SELECT][2] == "agent":
                 os.system("sudo python3 ./demos/speech/coze.py")
+            elif MENU_ITEMS[MENU_CURRENT_SELECT][2] == "dog_Joystick":
+                os.system("sudo python3 ./demos/dog_Joystick.py")
             print("program done")
             draw_title_bar(MENU_CURRENT_SELECT)
         except BaseException as e:
