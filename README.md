@@ -2,6 +2,11 @@
 
 XGO-Rider，一个有趣的双轮足机器人。
 
+# 选择语言 / Select Language
+
+- [中文](#README.md)
+- [English](README_en.md)
+
 ## 目录
 
 - [项目简介](#项目简介)
